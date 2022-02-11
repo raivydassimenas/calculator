@@ -13,72 +13,25 @@ function App() {
   return (
     <div className="App">
       <Container>
-        <Row>
-          <Col>
-            <div id="display">{result}</div>
-          </Col>
-        </Row>
-        <Row>
-          <Col>
-            <Button id="zero">0</Button>
-          </Col>
-          <Col>
-            <Button id="one">1</Button>
-          </Col>
-          <Col>
-            <Button id="two">2</Button>
-          </Col>
-          <Col>
-            <Button id="three">3</Button>
-          </Col>
-        </Row>
-        <Row>
-          <Col>
-            <Button id="four">4</Button>
-          </Col>
-          <Col>
-            <Button id="five">5</Button>
-          </Col>
-          <Col>
-            <Button id="six">6</Button>
-          </Col>
-          <Col>
-            <Button id="seven">7</Button>
-          </Col>
-        </Row>
-        <Row>
-          <Col>
-            <Button id="eight">8</Button>
-          </Col>
-          <Col>
-            <Button id="nine">9</Button>
-          </Col>
-          <Col>
-            <Button id="decimal">.</Button>
-          </Col>
-          <Col>
-            <Button id="clear">C</Button>
-          </Col>
-        </Row>
-        <Row>
-          <Col>
-            <Button id="add">+</Button>
-          </Col>
-          <Col>
-            <Button id="subtract">-</Button>
-          </Col>
-          <Col>
-            <Button id="multiply">*</Button>
-          </Col>
-          <Col>
-            <Button id="divide">/</Button>
-          </Col>
-        </Row>
-        <Row>
-          <Col>
-            <Button id="equals">=</Button>
-          </Col>
-        </Row>
+        <div id="display">{result}</div>
+        <Button id="zero">0</Button>
+
+        <Button id="one">1</Button>
+        <Button id="two">2</Button>
+        <Button id="three">3</Button>
+        <Button id="four">4</Button>
+        <Button id="five">5</Button>
+        <Button id="six">6</Button>
+        <Button id="seven">7</Button>
+        <Button id="eight">8</Button>
+        <Button id="nine">9</Button>
+        <Button id="decimal">.</Button>
+        <Button id="clear">C</Button>
+        <Button id="add">+</Button>
+        <Button id="subtract">-</Button>
+        <Button id="multiply">*</Button>
+        <Button id="divide">/</Button>
+        <Button id="equals">=</Button>
       </Container>
     </div>
   );

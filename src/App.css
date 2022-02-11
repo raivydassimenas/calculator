@@ -39,4 +39,10 @@
   grid-column: 1/5;
   width: 150px;
   height: 45px;
+  margin: auto;
+  background-color: #a52a2a;
+}
+
+#clear {
+  background-color: #a52a2a;
 }

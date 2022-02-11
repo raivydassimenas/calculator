@@ -10,6 +10,39 @@ function App() {
 
   const [result, setResult] = useState(0);
 
+  const handleClick = (event) => {
+    if (event.target.id === "clear") {
+      setResult(0);
+    } else if (event.target.id === "zero") {
+      setResult(result => result * 10);
+    } else if (event.target.id === "one") {
+      setResult(result => result * 10 + 1);
+    } else if (event.target.id === "two") {
+      setResult(result => result * 10 + 2);
+    } else if (event.target.id === "three") {
+      setResult(result => result * 10 + 3);
+    } else if (event.target.id === "four") {
+      setResult(result => result * 10 + 4);
+    } else if (event.target.id === "five") {
+      setResult(result => result * 10 + 5);
+    } else if (event.target.id === "six") {
+      setResult(result => result * 10 + 6);
+    } else if (event.target.id === "seven") {
+      setResult(result => result * 10 + 7);
+    } else if (event.target.id === "eight") {
+      setResult(result => result * 10 + 8);
+    } else if (event.target.id === "nine") {
+      setResult(result => result * 10 + 9);
+    }
+  }
+
+  useEffect(() => {
+    window.addEventListener("click", handleClick);
+    return () => {
+      window.removeEventListener("click", handleClick);
+    }
+  }, []);
+
   return (
     <div className="App">
       <Container>

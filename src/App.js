@@ -11,15 +11,46 @@ function App() {
   const [currNum, setCurrNum] = useState("0");
   const [expToCalculate, setExpToCalculate] = useState([]);
 
-  const calculateResult = () => {
-    return 1;
-  }
+  const calculateResult = useCallback(() => {
+    let result = Number(expToCalculate[0]);
+    for (let idx = 1; idx < expToCalculate.length; idx++) {
+      if ("+-*/".indexOf(expToCalculate[idx]) === -1) {
+        if (expToCalculate[idx - 1] === "+") {
+          result += Number(expToCalculate[idx]);
+        } else if (expToCalculate[idx - 1] === "*") {
+          result *= Number(expToCalculate[idx]);
+        } else if (expToCalculate[idx - 1] === "/") {
+          if (Number(expToCalculate[idx]) === 0) {
+            return 0;
+          }
+          result /= Number(expToCalculate[idx]);
+        } else if (expToCalculate[idx - 1] === "-") {
+          if (idx > 1 && "+-*/".indexOf(expToCalculate[idx - 2]) !== -1) {
+            let number = Number("-" + expToCalculate[idx]);
+            if (expToCalculate[idx - 2] === "+") {
+              result += number;
+            } else if (expToCalculate[idx - 2] === "-") {
+              result -= number;
+            } else if (expToCalculate[idx - 2] === "*") {
+              result *= number;
+            } else if (expToCalculate[idx - 2] === "/") {
+              if (number === 0) {
+                return 0;
+              }
+              result /= number;
+            }
+          } else {
+            result -= Number(expToCalculate[idx]);
+          }
+        }
+      }
+    }
+
+    return result;
+  }, [expToCalculate]);
 
   const handleClick = (event) => {
-    if (isAfterEquals) {
-      setAfterEquals(false);
-      setCurrNum("0");
-    } else if (event.target.id === "clear") {
+    if (event.target.id === "clear") {
       setCurrNum("0");
       setExpToCalculate([]);
       setDec(true);
@@ -82,7 +113,9 @@ function App() {
     } else if (event.target.id === "decimal" && dec) {
       setCurrNum(currNum + ".");
       setDec(false);
-    } else if (event.target.id === "add") {
+    }
+
+    if (event.target.id === "add") {
       setExpToCalculate([...expToCalculate, currNum, "+"]);
       setCurrNum("0");
       setDec(true);
@@ -99,9 +132,7 @@ function App() {
       setCurrNum("0");
       setDec(true);
     } else if (event.target.id === "equals") {
-      setCurrNum(calculateResult());
-      setExpToCalculate([]);
-      setDec(true);
+      setExpToCalculate([...expToCalculate, currNum]);
       setAfterEquals(true);
     }
   }
@@ -112,6 +143,14 @@ function App() {
       window.removeEventListener("click", handleClick);
     }
   });
+
+  useEffect(() => {
+    if (isAfterEquals) {
+      setCurrNum((+calculateResult().toFixed(4)).toString());
+      setAfterEquals(false);
+    }
+
+  }, [isAfterEquals, calculateResult])
 
   return (
     <div className="App">

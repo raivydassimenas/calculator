@@ -6,61 +6,104 @@ import Container from 'react-bootstrap/Container';
 
 function App() {
 
-  const [currNum, setCurrNum] = useState(0);
+  const [isAfterEquals, setAfterEquals] = useState(false);
+  const [dec, setDec] = useState(true);
+  const [currNum, setCurrNum] = useState("0");
   const [expToCalculate, setExpToCalculate] = useState([]);
-  const [outputQueue, setOutputQueue] = useState([]);
-  const [operatorStack, setOperatorStack] = useState([]);
 
   const calculateResult = () => {
-    return 0;
+    return 1;
   }
 
   const handleClick = (event) => {
-    if (event.target.id === "clear") {
-      setCurrNum(0);
+    if (isAfterEquals) {
+      setAfterEquals(false);
+      setCurrNum("0");
+    } else if (event.target.id === "clear") {
+      setCurrNum("0");
       setExpToCalculate([]);
-      setOutputQueue([]);
-      setOperatorStack([]);
-    } else if (event.target.id === "zero") {
-      setCurrNum(currNum => currNum * 10);
+      setDec(true);
+    } else if (event.target.id === "zero" && !dec) {
+      setCurrNum(currNum + "0");
     } else if (event.target.id === "one") {
-      setCurrNum(currNum => currNum * 10 + 1);
+      if (currNum === "0") {
+        setCurrNum("1");
+      } else {
+        setCurrNum(currNum + "1");
+      }
     } else if (event.target.id === "two") {
-      setCurrNum(currNum => currNum * 10 + 2);
+      if (currNum === "0") {
+        setCurrNum("2");
+      } else {
+        setCurrNum(currNum + "2");
+      }
     } else if (event.target.id === "three") {
-      setCurrNum(currNum => currNum * 10 + 3);
+      if (currNum === "0") {
+        setCurrNum("3");
+      } else {
+        setCurrNum(currNum + "3");
+      }
     } else if (event.target.id === "four") {
-      setCurrNum(currNum => currNum * 10 + 4);
+      if (currNum === "0") {
+        setCurrNum("4");
+      } else {
+        setCurrNum(currNum + "4");
+      }
     } else if (event.target.id === "five") {
-      setCurrNum(currNum => currNum * 10 + 5);
+      if (currNum === "0") {
+        setCurrNum("5");
+      } else {
+        setCurrNum(currNum + "5");
+      }
     } else if (event.target.id === "six") {
-      setCurrNum(currNum => currNum * 10 + 6);
+      if (currNum === "0") {
+        setCurrNum("6");
+      } else {
+        setCurrNum(currNum + "6");
+      }
     } else if (event.target.id === "seven") {
-      setCurrNum(currNum => currNum * 10 + 7);
+      if (currNum === "0") {
+        setCurrNum("7");
+      } else {
+        setCurrNum(currNum + "7");
+      }
     } else if (event.target.id === "eight") {
-      setCurrNum(currNum => currNum * 10 + 8);
+      if (currNum === "0") {
+        setCurrNum("8");
+      } else {
+        setCurrNum(currNum + "8");
+      }
     } else if (event.target.id === "nine") {
-      setCurrNum(currNum => currNum * 10 + 9);
+      if (currNum === "0") {
+        setCurrNum("9");
+      } else {
+        setCurrNum(currNum + "9");
+      }
+    } else if (event.target.id === "decimal" && dec) {
+      setCurrNum(currNum + ".");
+      setDec(false);
     } else if (event.target.id === "add") {
       setExpToCalculate([...expToCalculate, currNum, "+"]);
-      setCurrNum(0);
+      setCurrNum("0");
+      setDec(true);
     } else if (event.target.id === "subtract") {
       setExpToCalculate([...expToCalculate, currNum, "-"]);
-      setCurrNum(0);
+      setCurrNum("0");
+      setDec(true);
     } else if (event.target.id === "multiply") {
       setExpToCalculate([...expToCalculate, currNum, "*"]);
-      setCurrNum(0);
+      setCurrNum("0");
+      setDec(true);
     } else if (event.target.id === "divide") {
       setExpToCalculate([...expToCalculate, currNum, "/"]);
-      setCurrNum(0);
+      setCurrNum("0");
+      setDec(true);
     } else if (event.target.id === "equals") {
       setCurrNum(calculateResult());
       setExpToCalculate([]);
-      setOutputQueue([]);
-      setOperatorStack([]);
+      setDec(true);
+      setAfterEquals(true);
     }
-
-    console.log(expToCalculate);
   }
 
   useEffect(() => {

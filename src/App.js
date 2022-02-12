@@ -1,39 +1,66 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
 
 function App() {
 
-  const [result, setResult] = useState(0);
+  const [currNum, setCurrNum] = useState(0);
+  const [expToCalculate, setExpToCalculate] = useState([]);
+  const [outputQueue, setOutputQueue] = useState([]);
+  const [operatorStack, setOperatorStack] = useState([]);
+
+  const calculateResult = () => {
+    return 0;
+  }
 
   const handleClick = (event) => {
     if (event.target.id === "clear") {
-      setResult(0);
+      setCurrNum(0);
+      setExpToCalculate([]);
+      setOutputQueue([]);
+      setOperatorStack([]);
     } else if (event.target.id === "zero") {
-      setResult(result => result * 10);
+      setCurrNum(currNum => currNum * 10);
     } else if (event.target.id === "one") {
-      setResult(result => result * 10 + 1);
+      setCurrNum(currNum => currNum * 10 + 1);
     } else if (event.target.id === "two") {
-      setResult(result => result * 10 + 2);
+      setCurrNum(currNum => currNum * 10 + 2);
     } else if (event.target.id === "three") {
-      setResult(result => result * 10 + 3);
+      setCurrNum(currNum => currNum * 10 + 3);
     } else if (event.target.id === "four") {
-      setResult(result => result * 10 + 4);
+      setCurrNum(currNum => currNum * 10 + 4);
     } else if (event.target.id === "five") {
-      setResult(result => result * 10 + 5);
+      setCurrNum(currNum => currNum * 10 + 5);
     } else if (event.target.id === "six") {
-      setResult(result => result * 10 + 6);
+      setCurrNum(currNum => currNum * 10 + 6);
     } else if (event.target.id === "seven") {
-      setResult(result => result * 10 + 7);
+      setCurrNum(currNum => currNum * 10 + 7);
     } else if (event.target.id === "eight") {
-      setResult(result => result * 10 + 8);
+      setCurrNum(currNum => currNum * 10 + 8);
     } else if (event.target.id === "nine") {
-      setResult(result => result * 10 + 9);
+      setCurrNum(currNum => currNum * 10 + 9);
+    } else if (event.target.id === "add") {
+      setExpToCalculate([...expToCalculate, currNum, "+"]);
+      setCurrNum(0);
+    } else if (event.target.id === "subtract") {
+      setExpToCalculate([...expToCalculate, currNum, "-"]);
+      setCurrNum(0);
+    } else if (event.target.id === "multiply") {
+      setExpToCalculate([...expToCalculate, currNum, "*"]);
+      setCurrNum(0);
+    } else if (event.target.id === "divide") {
+      setExpToCalculate([...expToCalculate, currNum, "/"]);
+      setCurrNum(0);
+    } else if (event.target.id === "equals") {
+      setCurrNum(calculateResult());
+      setExpToCalculate([]);
+      setOutputQueue([]);
+      setOperatorStack([]);
     }
+
+    console.log(expToCalculate);
   }
 
   useEffect(() => {
@@ -41,12 +68,12 @@ function App() {
     return () => {
       window.removeEventListener("click", handleClick);
     }
-  }, []);
+  });
 
   return (
     <div className="App">
       <Container>
-        <div id="display">{result}</div>
+        <div id="display">{currNum}</div>
         <Button id="zero">0</Button>
 
         <Button id="one">1</Button>

@@ -6,53 +6,61 @@ import Container from 'react-bootstrap/Container';
 
 function App() {
 
+  const [pressedEquals, setPressedEquals] = useState(false);
+  const [numberChanged, setNumberChanged] = useState(false);
   const [dec, setDec] = useState(true);
   const [currNum, setCurrNum] = useState("0");
   const [expToCalculate, setExpToCalculate] = useState([]);
 
-  const calculateResult = () => {
-    if (expToCalculate.length === 0) {
-      return currNum;
+  const calculateResult = (expression) => {
+
+    let start = 0;
+    let result = 0;
+
+    while ("+-/*".indexOf(expression[start]) > -1) {
+      start++;
+    }
+    
+    if (start > 0 && expression[start-1] === "-") {
+      result = Number("-" + expression[start]);
+    } else {
+      result = Number(expression[start]);
     }
 
-    return 1;
-    // if (expToCalculate.length > -1) {
+    for (let idx = start+1; idx < expression.length; idx++) {
+      if ("+-*/".indexOf(expression[idx]) === -1) {
+        if (expression[idx - 1] === "+") {
+          result += Number(expression[idx]);
+        } else if (expression[idx - 1] === "*") {
+          result *= Number(expression[idx]);
+        } else if (expression[idx - 1] === "/") {
+          if (Number(expression[idx]) === 0) {
+            return 0;
+          }
+          result /= Number(expression[idx]);
+        } else if (expression[idx - 1] === "-") {
+          if (idx > 1 && "+-*/".indexOf(expression[idx - 2]) !== -1) {
+            let number = Number("-" + expression[idx]);
+            if (expression[idx - 2] === "+") {
+              result += number;
+            } else if (expression[idx - 2] === "-") {
+              result -= number;
+            } else if (expression[idx - 2] === "*") {
+              result *= number;
+            } else if (expression[idx - 2] === "/") {
+              if (number === 0) {
+                return 0;
+              }
+              result /= number;
+            }
+          } else {
+            result -= Number(expression[idx]);
+          }
+        }
+      }
+    }
 
-    // }
-    // for (let idx = 1; idx < expToCalculate.length; idx++) {
-    //   if ("+-*/".indexOf(expToCalculate[idx]) === -1) {
-    //     if (expToCalculate[idx - 1] === "+") {
-    //       result += Number(expToCalculate[idx]);
-    //     } else if (expToCalculate[idx - 1] === "*") {
-    //       result *= Number(expToCalculate[idx]);
-    //     } else if (expToCalculate[idx - 1] === "/") {
-    //       if (Number(expToCalculate[idx]) === 0) {
-    //         return 0;
-    //       }
-    //       result /= Number(expToCalculate[idx]);
-    //     } else if (expToCalculate[idx - 1] === "-") {
-    //       if (idx > 1 && "+-*/".indexOf(expToCalculate[idx - 2]) !== -1) {
-    //         let number = Number("-" + expToCalculate[idx]);
-    //         if (expToCalculate[idx - 2] === "+") {
-    //           result += number;
-    //         } else if (expToCalculate[idx - 2] === "-") {
-    //           result -= number;
-    //         } else if (expToCalculate[idx - 2] === "*") {
-    //           result *= number;
-    //         } else if (expToCalculate[idx - 2] === "/") {
-    //           if (number === 0) {
-    //             return 0;
-    //           }
-    //           result /= number;
-    //         }
-    //       } else {
-    //         result -= Number(expToCalculate[idx]);
-    //       }
-    //     }
-    //   }
-    // }
-
-    // return result;
+    return result;
   }
 
   const handleClick = (event) => {
@@ -63,120 +71,219 @@ function App() {
     }
 
     if (event.target.id === "zero") {
-      if (currNum !== "0") {
-        setCurrNum(currNum + "0");
+      if (pressedEquals) {
+        setCurrNum("0");
+        setPressedEquals(false);
+        setNumberChanged(true);
+      } else {
+        if (currNum !== "0") {
+          setCurrNum(currNum + "0");
+          setNumberChanged(true);
+        }
       }
     }
     if (event.target.id === "one") {
-      if (currNum === "0") {
+      if (pressedEquals) {
         setCurrNum("1");
+        setPressedEquals(false);
       } else {
-        setCurrNum(currNum + "1");
+        if (currNum === "0") {
+          setCurrNum("1");
+        } else {
+          setCurrNum(currNum + "1");
+        }
       }
+      setNumberChanged(true);
     }
     if (event.target.id === "two") {
-      if (currNum === "0") {
+      if (pressedEquals) {
         setCurrNum("2");
+        setPressedEquals(false);
       } else {
-        setCurrNum(currNum + "2");
+        if (currNum === "0") {
+          setCurrNum("2");
+        } else {
+          setCurrNum(currNum + "2");
+        }
       }
+      setNumberChanged(true);
     }
     if (event.target.id === "three") {
-      if (currNum === "0") {
+      if (pressedEquals) {
         setCurrNum("3");
+        setPressedEquals(false);
       } else {
-        setCurrNum(currNum + "3");
+        if (currNum === "0") {
+          setCurrNum("3");
+        } else {
+          setCurrNum(currNum + "3");
+        }
       }
+      setNumberChanged(true);
     }
     if (event.target.id === "four") {
-      if (currNum === "0") {
+      if (pressedEquals) {
         setCurrNum("4");
+        setPressedEquals(false);
       } else {
-        setCurrNum(currNum + "4");
+        if (currNum === "0") {
+          setCurrNum("4");
+        } else {
+          setCurrNum(currNum + "4");
+        }
       }
+      setNumberChanged(true);
     }
     if (event.target.id === "five") {
-      if (currNum === "0") {
+      if (pressedEquals) {
         setCurrNum("5");
+        setPressedEquals(false);
       } else {
-        setCurrNum(currNum + "5");
+        if (currNum === "0") {
+          setCurrNum("5");
+        } else {
+          setCurrNum(currNum + "5");
+        }
       }
+      setNumberChanged(true);
     }
     if (event.target.id === "six") {
-      if (currNum === "0") {
+      if (pressedEquals) {
         setCurrNum("6");
+        setPressedEquals(false);
       } else {
-        setCurrNum(currNum + "6");
+        if (currNum === "0") {
+          setCurrNum("6");
+        } else {
+          setCurrNum(currNum + "6");
+        }
       }
+      setNumberChanged(true);
     }
     if (event.target.id === "seven") {
-      if (currNum === "0") {
+      if (pressedEquals) {
         setCurrNum("7");
+        setPressedEquals(false);
       } else {
-        setCurrNum(currNum + "7");
+        if (currNum === "0") {
+          setCurrNum("7");
+        } else {
+          setCurrNum(currNum + "7");
+        }
       }
+      setNumberChanged(true);
     }
     if (event.target.id === "eight") {
-      if (currNum === "0") {
+      if (pressedEquals) {
         setCurrNum("8");
+        setPressedEquals(false);
       } else {
-        setCurrNum(currNum + "8");
+        if (currNum === "0") {
+          setCurrNum("8");
+        } else {
+          setCurrNum(currNum + "8");
+        }
       }
+      setNumberChanged(true);
     }
     if (event.target.id === "nine") {
-      if (currNum === "0") {
+      if (pressedEquals) {
         setCurrNum("9");
+        setPressedEquals(false);
       } else {
-        setCurrNum(currNum + "9");
+        if (currNum === "0") {
+          setCurrNum("9");
+        } else {
+          setCurrNum(currNum + "9");
+        }
       }
+      setNumberChanged(true);
     }
 
     if (event.target.id === "decimal") {
-      if (dec) {
+      if (pressedEquals) {
+        setCurrNum("0.");
+        setDec(false);
+        setPressedEquals(false);
+        setNumberChanged(true);
+      } else if (dec) {
         setCurrNum(currNum + ".");
         setDec(false);
+        setNumberChanged(true);
       }
     }
 
     if (event.target.id === "add") {
-      if (expToCalculate.length > -1 && "+-*/".indexOf(expToCalculate.at(-1)) > -1) {
+      if (pressedEquals) {
+        setExpToCalculate([currNum, "+"]);
+        setCurrNum("0");
+        setNumberChanged(false);
+      } else if (expToCalculate.length > -1 && "+-*/".indexOf(expToCalculate.at(-1)) > -1 && !numberChanged) {
         setExpToCalculate([...expToCalculate, "+"]);
+        setCurrNum("0");
+        setNumberChanged(false);
       } else {
         setExpToCalculate([...expToCalculate, currNum, "+"]);
         setCurrNum("0");
         setDec(true);
+        setNumberChanged(false);
       }
     }
     if (event.target.id === "subtract") {
-      if (expToCalculate.length > -1 && "+-*/".indexOf(expToCalculate.at(-1)) > -1) {
+      if (pressedEquals) {
+        setExpToCalculate([currNum, "-"]);
+        setCurrNum("0");
+        setNumberChanged(false);
+      } else if (expToCalculate.length > -1 && "+-*/".indexOf(expToCalculate.at(-1)) > -1 && !numberChanged) {
         setExpToCalculate([...expToCalculate, "-"]);
+        setCurrNum("0");
+        setNumberChanged(false);
       } else {
         setExpToCalculate([...expToCalculate, currNum, "-"]);
         setCurrNum("0");
         setDec(true);
+        setNumberChanged(false);
       }
     }
     if (event.target.id === "multiply") {
-      if (expToCalculate.length > -1 && "+-*/".indexOf(expToCalculate.at(-1)) > -1) {
+      if (pressedEquals) {
+        setExpToCalculate([currNum, "*"]);
+        setCurrNum("0");
+        setNumberChanged(false);
+      } else if (expToCalculate.length > -1 && "+-*/".indexOf(expToCalculate.at(-1)) > -1 && !numberChanged) {
         setExpToCalculate([...expToCalculate, "*"]);
+        setCurrNum("0");
+        setNumberChanged(false);
       } else {
         setExpToCalculate([...expToCalculate, currNum, "*"]);
         setCurrNum("0");
         setDec(true);
+        setNumberChanged(false);
       }
     }
     if (event.target.id === "divide") {
-      if (expToCalculate.length > -1 && "+-*/".indexOf(expToCalculate.at(-1)) > -1) {
+      if (pressedEquals) {
+        setExpToCalculate([currNum, "/"]);
+        setCurrNum("0");
+        setNumberChanged(false);
+      } else if (expToCalculate.length > -1 && "+-*/".indexOf(expToCalculate.at(-1)) > -1 && !numberChanged) {
         setExpToCalculate([...expToCalculate, "/"]);
+        setCurrNum("0");
+        setNumberChanged(false);
       } else {
         setExpToCalculate([...expToCalculate, currNum, "/"]);
         setCurrNum("0");
         setDec(true);
+        setNumberChanged(false);
       }
     }
 
     if (event.target.id === "equals") {
-      
+      setPressedEquals(true);
+      let result = calculateResult([...expToCalculate, currNum]);
+      setCurrNum(result);
+      setDec(true);
+      setExpToCalculate([]);
     }
   }
 
